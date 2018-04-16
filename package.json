@@ -31,7 +31,7 @@
     "url": "https://github.com/EhabGamal/webcom-as-promised/issues"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 0"
   },
   "dependencies": {
     "webcom": "^1.3.2"
