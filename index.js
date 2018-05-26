@@ -1,4 +1,5 @@
 const myWebcom = require('webcom');
+const axios = require('axios');
 
 module.exports = myWebcom;
 
@@ -44,5 +45,35 @@ enhancedPrototype.getPathFromRoot = function getPathFromRoot() {
 enhancedPrototype.navigateFromRoot = function navigateFromRoot(StringToNavigate = '') {
   return this.root().child(StringToNavigate);
 };
+
+enhancedPrototype.confirmEmail = function confirmEmail(token = '', options = {}) {
+  const {app = null, url = null} = options;
+  const appName = app || this.root().toString().split('/').slice(-1)[0];
+  const confirmURL = url || `https://io.datasync.orange.com/auth/v2/${appName}/password/confirm`;
+  
+  return axios({
+      method: 'PUT',
+      url: confirmURL,
+      params: { token }
+    })
+    .then(res => res.data)
+    .catch(err => Promise.reject(err.response.data.error));
+}
+
+enhancedPrototype.resetPassword = function resetPassword(token = '', newPassword = '', options = {}) {
+  const {app = null, url = null} = options;
+  const appName = app || this.root().toString().split('/').slice(-1)[0];
+  const resetURL = url || `https://io.datasync.orange.com/auth/v2/${appName}/password/update`;
+  
+  return axios({
+      method: 'PUT',
+      url: resetURL,
+      params: { token },
+      data: `newPassword=${newPassword}`,
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+    })
+    .then(res => res.data)
+    .catch(err => Promise.reject(err.response.data.error));
+}
 
 myWebcom.prototype = enhancedPrototype;
