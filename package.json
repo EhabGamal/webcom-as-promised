@@ -1,6 +1,6 @@
 {
   "name": "webcom-as-promised",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "main": "index.js",
   "description": "Promise wrapper for webcom library",
   "author": "Ehab Gamal",
